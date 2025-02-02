@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DaWeek - Financial Calendar Assistant</title>
+    <meta name="description" content="DaWeek.com helps you calculate financial days, weeks, and months based on a custom financial year start date. Perfect for businesses, accountants, and finance professionals.">
+    <meta name="keywords" content="financial calendar, fiscal week, fiscal day, fiscal month, finance calculator, business date calculator">
+    <meta name="author" content="Max">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Import Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sixtyfour&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Space Mono', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Flashing cursor animation */
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .page-title {
+            font-family: 'Sixtyfour', sans-serif;
+            font-size: clamp(2em, 5vw, 3.5em);
+            color: #34a853;
+            margin-top: 10px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        /* Flashing cursor added */
+        .calendar-emoji::after {
+            content: "🗓️";
+            display: inline;
+            margin-left: 5px;
+            font-size: 1.2em; 
+            animation: blink 1.8s infinite;
+        }
+
+        .subtitle {
+            font-family: 'Sixtyfour', sans-serif;
+            font-size: 0.65em;
+            color: #5f6368;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .calendar-emoji {
+            font-size: 4em;
+            margin-bottom: 1px;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .input-group {
+            margin: 10px 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-family: 'Sixtyfour', sans-serif;
+            font-size: 0.75em;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            font-weight: bold;
+            padding: 12px;
+            border: 2px solid #202124;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 100%;
+            max-width: 300px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        input:focus {
+            border-color: #4285f4;
+            outline: none;
+        }
+
+        .output {
+            margin-top: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .output span {
+            color: #34a853;
+        }
+
+        .error {
+            color: red;
+            margin-top: -10px;
+        }
+
+        .dark-mode-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0px;
+            font-size: 2em;
+            cursor: pointer;
+        }
+
+        /* Footer Links (Navigation) */
+        .footer-links {
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .footer-links a {
+            color: #34a853;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Small Footer Text */
+        .small-footer {
+            font-size: 0.6em;
+            color: #5f6368;
+            margin-top: 10px;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #202124;
+            color: #e8eaed;
+        }
+
+        body.dark-mode input {
+            border-color: #e8eaed;
+            background-color: #3c4043;
+            color: #e8eaed;
+        }
+
+        body.dark-mode .footer-links a {
+            color: #34a853;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-title">&nbsp;DaWeek.com</div>
+    <p class="subtitle">Your financial calendar assistant</p>
+    <div class="calendar-emoji"></div>
+
+    <div class="input-container">
+        <div class="input-group">
+            <label for="yearStart">Year Start</label>
+            <input type="date" id="yearStart" value="2024-04-01">
+        </div>
+        <div class="input-group">
+            <label for="whatDate">What Date</label>
+            <input type="date" id="whatDate">
+        </div>
+    </div>
+    <div class="output">
+        <p>Financial Day: <span id="financialDay">-</span></p>
+        <p>Financial Week: <span id="financialWeek">-</span></p>
+        <p>Financial Month: <span id="financialMonth">-</span></p>
+    </div>
+    <div class="dark-mode-toggle" id="darkModeToggle">🌙</div>
+    <p class="error" id="error"></p>
+
+    <!-- Footer with Navigation Links -->
+    <footer class="footer-links">
+        <a href="pages/index.html">Home</a> |
+        <a href="pages/about.html">About</a> |
+        <a href="pages/word.html">Word of DaWeek</a> |
+        <a href="pages/release-notes.html">Release Notes</a>
+    </footer>
+
+    <!-- Small Footer Text -->
+    <footer class="small-footer">
+        Version 0.3.1 Alpha <br> *** <br> Made with love by Max
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearStartInput = document.getElementById('yearStart');
+            const whatDateInput = document.getElementById('whatDate');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const today = new Date();
+            whatDateInput.value = today.toISOString().split('T')[0];
+
+            function calculateFinancialDate() {
+                const yearStart = new Date(yearStartInput.value);
+                const whatDate = new Date(whatDateInput.value);
+                const errorElement = document.getElementById('error');
+
+                if (isNaN(yearStart) || isNaN(whatDate)) {
+                    errorElement.textContent = "Please enter valid dates.";
+                    return;
+                }
+
+                errorElement.textContent = "";
+                const diffTime = whatDate - yearStart;
+                if (diffTime < 0) {
+                    errorElement.textContent = "The selected date is before the financial year start.";
+                    return;
+                }
+
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                document.getElementById('financialDay').textContent = diffDays + 1;
+                document.getElementById('financialWeek').textContent = Math.ceil((diffDays + 1) / 7);
+                document.getElementById('financialMonth').textContent = Math.ceil((diffDays + 1) / 30);
+            }
+
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+            }
+
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
+            });
+
+            yearStartInput.addEventListener('change', calculateFinancialDate);
+            whatDateInput.addEventListener('change', calculateFinancialDate);
+            calculateFinancialDate();
+        });
+    </script>
+</body>
+</html>

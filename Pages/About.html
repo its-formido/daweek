@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About DaWeek</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Space Mono', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .about-container {
+            max-width: 600px;
+            text-align: left;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #34a853;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        /* Toggle Switch */
+        .toggle-container {
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+
+        .toggle-label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .toggle-switch {
+            cursor: pointer;
+            padding: 10px 20px;
+            border: none;
+            background-color: #34a853;
+            color: white;
+            border-radius: 8px;
+            font-size: 1em;
+            animation: blink 1s infinite;
+        }
+
+        .toggle-switch:hover {
+            background-color: #2c8a47;
+        }
+
+        /* Flashing animation */
+        @keyframes blink {
+            50% { opacity: 0.5; }
+        }
+
+        /* Footer Links */
+        .footer-links {
+            margin-top: 40px;
+            font-size: 0.9em;
+        }
+
+        .footer-links a {
+            color: #34a853;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #202124;
+            color: #e8eaed;
+        }
+
+        body.dark-mode h1 {
+            color: #34a853;
+        }
+
+        body.dark-mode .footer-links a {
+            color: #34a853;
+        }
+
+        body.dark-mode .toggle-switch {
+            background-color: #34a853;
+        }
+    </style>
+</head>
+<body>
+    <h1>About DaWeek</h1>
+
+    <!-- Toggle Button -->
+    <div class="toggle-container">
+        <span class="toggle-label">Mode:</span>
+        <button class="toggle-switch" onclick="toggleMode()">Serious</button>
+    </div>
+
+    <!-- About Content -->
+    <div class="about-container" id="aboutContent">
+        <p>DaWeek is a powerful financial calendar assistant designed to help businesses, accountants, and finance professionals 
+        easily calculate financial days, weeks, and months based on a custom fiscal year start date.</p>
+        
+        <p>With its intuitive design and dark mode support, DaWeek ensures a seamless experience for users who need quick, 
+        accurate financial date calculations.</p>
+        
+        <p>Whether you're managing budgets, tracking fiscal deadlines, or simply looking for a smarter way to navigate financial timeframes, 
+        DaWeek has you covered.</p>
+    </div>
+
+    <!-- Footer with Navigation Links -->
+    <footer class="footer-links">
+        <a href="../index.html">Home</a> |
+        <a href="about.html">About</a> |
+        <a href="word.html">Word of DaWeek</a> |
+        <a href="release-notes.html">Release Notes</a>
+    </footer>
+
+    <script>
+        // Ensure dark mode persists across pages
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // Toggle between "Serious" and "Funny"
+        function toggleMode() {
+            const content = document.getElementById('aboutContent');
+            const button = document.querySelector('.toggle-switch');
+
+            if (button.textContent === "Serious") {
+                button.textContent = "Funny";
+                content.innerHTML = `
+                    <p>DaWeek: Because counting days manually is so last century. Let us do the heavy lifting while you pretend to work.</p>
+                    
+                    <p>We take your serious financial calculations and add a touch of dark mode magic, ensuring that your eyeballs stay relaxed 
+                    while you crunch numbers and question your career choices.</p>
+                    
+                    <p>Need to impress your boss with accurate fiscal data? We've got you. Need an excuse to procrastinate by "checking 
+                    financial dates"? Also covered. DaWeek is here to make finance as painless as possible (no guarantees, though).</p>
+                `;
+            } else {
+                button.textContent = "Serious";
+                content.innerHTML = `
+                    <p>DaWeek is a powerful financial calendar assistant designed to help businesses, accountants, and finance professionals 
+                    easily calculate financial days, weeks, and months based on a custom fiscal year start date.</p>
+                    
+                    <p>With its intuitive design and dark mode support, DaWeek ensures a seamless experience for users who need quick, 
+                    accurate financial date calculations.</p>
+                    
+                    <p>Whether you're managing budgets, tracking fiscal deadlines, or simply looking for a smarter way to navigate financial timeframes, 
+                    DaWeek has you covered.</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

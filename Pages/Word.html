@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word of DaWeek</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sixtyfour&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Space Mono', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: #f8f9fa;
+            color: #202124;
+        }
+
+        .word-display {
+            font-family: 'Sixtyfour', sans-serif;
+            font-size: 4em;
+            color: #34a853;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .generate-btn {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            border: none;
+            background-color: #34a853;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .generate-btn:hover {
+            background-color: #2c8a47;
+        }
+
+        /* Footer Links */
+        .footer-links {
+            margin-top: 40px;
+            font-size: 0.9em;
+        }
+
+        .footer-links a {
+            color: #34a853;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+     
+        /* Small Footer Text */
+      .small-footer {
+            font-size: 0.6em;
+            color: #5f6368;
+            margin-top: 10px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #202124;
+            color: #e8eaed;
+        }
+
+        body.dark-mode .word-display {
+            color: #34a853;
+        }
+
+        body.dark-mode .generate-btn {
+            background-color: #34a853;
+        }
+
+        body.dark-mode .footer-links a {
+            color: #34a853;
+        }
+    </style>
+</head>
+<body>
+    <h1>Word of DaWeek</h1>
+    <div class="word-display" id="wordDisplay">Synergistic Alignment</div>
+    <button class="generate-btn" onclick="generateWord()">Generate New Word</button>
+
+    <!-- Footer with Navigation Links -->
+    <footer class="footer-links">
+        <a href="../index.html">Home</a> |
+        <a href="about.html">About</a> |
+        <a href="word.html">Word of DaWeek</a> |
+        <a href="release-notes.html">Release Notes</a>
+    </footer>
+
+<!-- Small Footer Text -->
+<footer class="small-footer">
+    Build In Collaboration With Claramax Industries
+</footer>
+
+    <script>
+        const words = [
+            "Agile Thinking", "Bandwidth", "Blue-Sky Thinking", "Boil the Ocean", "Bottom Line", "Brand Equity", "Buy-In", 
+"Circle Back", "Core Competency", "Customer Centric", "Deep Dive", "Disruptive Innovation", "Ecosystem", 
+"Empower", "Engagement", "Fast-Track", "Game Changer", "Holistic Approach", "Ideation", "Leverage", 
+"Low-Hanging Fruit", "Mission Critical", "Move the Needle", "Onboarding", "Operationalize", "Pain Point", 
+"Paradigm Shift", "Pivot", "Proactive", "Scalability", "Seamless Integration", "Strategic Fit", "Synergy", 
+"Take Offline", "Thought Leadership", "Tiger Team", "Touch Base", "Turnkey Solution", "Value Proposition", 
+"Visibility", "Win-Win", "Workflow Optimization", "Actionable Insights", "Align the Stars", "Amplify", 
+"Analytics-Driven", "Asynchronous Communication", "At the End of the Day", "Ballpark Figure", "Benchmarking", 
+"Best in Class", "Best Practice", "Big Data", "Big Picture Thinking", "Blockchain Integration", "Boil it Down", 
+"Bootstrapping", "Brain Dump", "Brainstorming Session", "Branding Strategy", "Brick-and-Mortar", "Bring to the Table", 
+"Broken Process", "Budgetary Alignment", "Business Case", "Business Continuity", "Business Intelligence", "Business Model", 
+"Business Synergy", "Buzzword Compliance", "Call to Action", "CapEx", "Change Agent", "Change Management", "Channel Strategy", 
+"Churn Rate", "Climb the Corporate Ladder", "Cloud-Based", "Collaborative Environment", "Competitive Advantage", "Competitive Edge", 
+"Conceptual Buy-In", "Consumer Engagement", "Content Curation", "Content Marketing", "Context Switching", "Continuous Improvement", 
+"Corporate Citizenship", "Corporate Social Responsibility", "Cost-Benefit Analysis", "Cost Leadership", "Critical Mass", 
+"Cross-Functional Teams", "Cross-Pollination", "Customer Experience", "Customer Journey", "Customer Lifetime Value", "Customer Loyalty", 
+"Customer Onboarding", "Customer Retention", "Customer-Centric", "Cutting-Edge", "Data-Driven", "Data Governance", "Data Monetization", 
+"Data Science", "Decisioning", "Deliverables", "Design Thinking", "Digital Disruption", "Digital Footprint", "Digital Transformation", 
+"Disintermediation", "Diversification Strategy", "Do More with Less", "Double Down", "Drilling Down", "Dynamic Approach", 
+"Dynamic Scalability", "E-Commerce Strategy", "Early Adopter", "Economic Moat", "Effortless Experience", "Emotional Intelligence", 
+"Empowering Teams", "End-to-End Solution", "Enterprise Agility", "Enterprise Architecture", "Enterprise Value", "Entrepreneurial Mindset", 
+"Environmental, Social, and Governance (ESG)", "Escalation Path", "Ethical Sourcing", "Exponential Growth", "Face Time", "Fail Fast", 
+"Fast-Paced Environment", "First Mover Advantage", "Fixed vs. Growth Mindset", "Flagship Product", "Flat Hierarchy", "Flexible Work Arrangement", 
+"Fluid Organization", "Flywheel Effect", "Frictionless Experience", "Future-Proof", "Gamification", "Gatekeeper", "Gig Economy", 
+"Global Mindset", "Go the Extra Mile", "Go-To-Market Strategy", "Goal Alignment", "Growth Hacking", "Growth Mindset", "Hands-On Experience", 
+"Harmonization", "High-Performance Culture", "Holacracy", "Human-Centered Design", "Hyper-Personalization", "Impact-Driven", "Inclusive Leadership", 
+"Incremental Innovation", "Industry Best Practices", "Industry Disruptor", "Information Asymmetry", "Innovation Lab", "Innovative Mindset", 
+"Inside the Box Thinking", "Inspirational Leadership", "Integrated Marketing", "Intellectual Capital", "Internet of Things (IoT)", 
+"Iterative Process", "Job Crafting", "Journey Mapping", "Just-In-Time", "Key Differentiator", "Key Performance Indicators (KPIs)", 
+"Key Takeaways", "Knowledge Economy", "Knowledge Sharing", "Lean Thinking", "Learning Organization", "Leverage Technology", 
+"Lifetime Customer Value", "Light Touch", "Limited Bandwidth", "Machine Learning", "Market Disruption", "Market Penetration", 
+"Market Segmentation", "Market Validation", "Marketing Funnel", "Maximum Impact", "Meaningful Work", "Mentorship Program", 
+"Micro-Innovation", "Mind Share", "Mission Alignment", "Monetization Strategy", "Multi-Channel Marketing", "Multiplier Effect", 
+"Must-Win Battle", "Narrative Building", "Next-Gen Solution", "Nimble Organization", "No-Brainer", "Non-Traditional Approach", 
+"Not a Priority", "Omnichannel Strategy", "On the Same Page", "One Size Doesn't Fit All", "Operational Efficiency", 
+"Operational Excellence", "Optimization Strategy", "Organic Growth", "Outcome-Driven", "Overarching Strategy", "Paradigm Shift", 
+"Partner Ecosystem", "Passion Project", "Peak Performance", "People-First Culture", "Performance Metrics", "Personal Branding", 
+"Personalized Customer Experience", "Pivot Strategy", "Plan of Action", "Predictive Analytics", "Preventative Maintenance", 
+"Prioritize and Execute", "Process Automation", "Proactive Communication", "Productivity Hack", "Profitability Matrix", 
+"Psychological Safety", "Purpose-Driven", "Push the Envelope", "Rapid Experimentation", "Recurring Revenue", "Red Flag", 
+"Redundancy Planning", "Reinvent the Wheel", "Relational Selling", "Remote-First", "Reputation Management", "Resilient Organization", 
+"Resource Allocation", "Responsive Leadership", "Revenue Optimization", "RevOps", "Right-Sizing", "Risk Mitigation", "Roadmap", 
+"ROI-Driven", "Rule of Thumb", "Runway", "SaaS Model", "Scalability", "Scenario Planning", "Seamless Integration", 
+"Second Mover Advantage", "Self-Disruption", "Self-Optimization", "Sense of Urgency", "Sentiment Analysis", "Service Design", 
+"Servant Leadership", "Shared Economy", "Shift the Paradigm", "Side Hustle", "Signaling Mechanism", "Silent Partner", 
+"Single Source of Truth", "Situational Awareness", "Skunkworks", "Smart Objectives", "Smart Scaling", "Social Capital", 
+"Social Currency", "Social Proof", "Soft Launch", "Solution-Oriented", "Speed to Market", "Stakeholder Buy-In", 
+"Stakeholder Engagement", "Standalone Value", "Start with Why", "Step Change", "Strategic Agility", "Strategic Imperative", 
+"Strategic Partnerships", "Strategic Roadmap", "Strategic Storytelling", "Structured Flexibility", "Subscription Economy", 
+"Success Framework", "Sustainability Roadmap", "Sustainable Competitive Advantage", "Synergistic Partnership", "System Thinking", 
+"Take it Offline", "Task Prioritization", "Tech-Driven", "Thought Leader", "Time to Value", "Total Addressable Market", 
+"Touchpoint Optimization", "Transformational Leadership", "Triple Bottom Line", "Turnkey Business", "Under the Radar", 
+"Unify the Vision", "Unpack the Problem", "Upskilling", "User-First", "Value-Based Pricing", "Value Chain", "Value Creation", 
+"Value Proposition", "Viral Growth", "Virtual Collaboration", "Virtual First", "Visibility Matrix", "War Room", "Weigh In", 
+"Well-Oiled Machine", "White Glove Service", "Whole-Person Approach", "Wild Card", "Win Hearts and Minds", "Winning Mindset", 
+"Workforce Transformation", "Work-Life Integration", "World-Class", "Zero-Based Budgeting", "Zero to One", "Zone of Genius"
+        ];
+
+        function generateWord() {
+            const randomWord = words[Math.floor(Math.random() * words.length)];
+            document.getElementById('wordDisplay').textContent = randomWord;
+        }
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</body>
+</html>
